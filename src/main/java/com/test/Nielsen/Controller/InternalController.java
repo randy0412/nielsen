@@ -3,6 +3,7 @@ package com.test.Nielsen.Controller;
 
 import com.test.Nielsen.Service.ProductService;
 import com.test.Nielsen.domain.Product;
+import com.test.Nielsen.domain.Shopper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class InternalController {
     }
 
     @GetMapping("/getProduct")
-    public ResponseEntity<Product> addProduct(@RequestParam Long productId) {
+    public ResponseEntity<Product> getProduct(@RequestParam Long productId) {
         return new ResponseEntity<Product>(productService.getProduct(productId), HttpStatus.OK);
     }
 
@@ -28,5 +29,12 @@ public class InternalController {
 
         productService.addProduct(product);
         return ResponseEntity.ok("Product Save Successfully");
+    }
+
+    @PostMapping("/addShopper")
+    public ResponseEntity<String> addProduct(@RequestBody Shopper shopper) {
+
+        productService.addShopper(shopper);
+        return ResponseEntity.ok("Shopper Save Successfully");
     }
 }
