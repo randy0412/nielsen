@@ -1,9 +1,11 @@
 package com.test.Nielsen.Controller;
 
-
+import com.test.Nielsen.Dto.ProductMetaDataDTO;
+import com.test.Nielsen.Dto.ShopperProductDTO;
 import com.test.Nielsen.Service.ProductService;
-import com.test.Nielsen.domain.Product;
-import com.test.Nielsen.domain.Shopper;
+import com.test.Nielsen.Service.ShopperService;
+import com.test.Nielsen.domain.ProductMetaData;
+import com.test.Nielsen.domain.ShopperProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,28 +15,30 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/internal/api")
 public class InternalController {
     private final ProductService productService;
+    private final ShopperService shopperService;
 
     @Autowired
-    public InternalController(ProductService productService) {
+    public InternalController(ProductService productService, ShopperService shopperService) {
         this.productService = productService;
+        this.shopperService = shopperService;
     }
 
     @GetMapping("/getProduct")
-    public ResponseEntity<Product> getProduct(@RequestParam Long productId) {
-        return new ResponseEntity<Product>(productService.getProduct(productId), HttpStatus.OK);
+    public ResponseEntity<ProductMetaDataDTO> getProductMetadata(@RequestParam String productId) {
+        return new ResponseEntity<ProductMetaDataDTO>(productService.getProduct(productId), HttpStatus.OK);
     }
 
     @PostMapping("/addProduct")
-    public ResponseEntity<String> addProduct(@RequestBody Product product) {
+    public ResponseEntity<String> addProductMetadata(@RequestBody ProductMetaDataDTO productMetaDataDTO) {
 
-        productService.addProduct(product);
+        productService.addProduct(productMetaDataDTO);
         return ResponseEntity.ok("Product Save Successfully");
     }
 
-    @PostMapping("/addShopper")
-    public ResponseEntity<String> addProduct(@RequestBody Shopper shopper) {
+    @PostMapping("/addShopperProduct")
+    public ResponseEntity<String> addProduct(@RequestBody ShopperProductDTO shopperProductDTO) {
 
-        productService.addShopper(shopper);
+        shopperService.addShopperProduct(shopperProductDTO);
         return ResponseEntity.ok("Shopper Save Successfully");
     }
 }

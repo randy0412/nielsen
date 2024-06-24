@@ -1,15 +1,23 @@
 package com.test.Nielsen.domain;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-@Data
-@Entity
-public class Product {
+import java.util.List;
 
+@Entity
+@Data
+public class Product {
     @Id
-    private Long productId;
-    private String brand;
-    private String category;
+    private String productId;
+    private double relevancyScore;
+
+    @ManyToOne
+    @JoinColumn(name = "shopper_id", nullable = false)
+    private ShopperProduct shopperProduct;
+
 }
